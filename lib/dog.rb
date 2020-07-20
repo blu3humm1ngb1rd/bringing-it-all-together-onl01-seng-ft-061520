@@ -62,6 +62,7 @@ class Dog
   end 
 
   def self.find_or_create_by(name:, breed:) 
+    
     sql = "SELECT * FROM dogs"
   end 
 end 
