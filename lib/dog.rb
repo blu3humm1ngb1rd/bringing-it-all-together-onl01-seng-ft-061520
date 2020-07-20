@@ -73,8 +73,16 @@ class Dog
   end 
   
   def self.find_by_name(name)
-   dog = DB[:conn].execute("SELECT * FROM dogs WHERE name = ?", name)[1]
-   Dog.new(id: dog[0], name: dog[1], breed: dog[2])
+   sql = <<-SQL
+      SELECT *
+      FROM dogs
+      WHERE name = ?
+      LIMIT 1
+    SQL
+
+    DB[:conn].execute(sql,name).map do |row|
+      self.new_from_db(row)
+    end.first
   end 
   
 end 
